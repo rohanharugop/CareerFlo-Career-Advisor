@@ -90,19 +90,14 @@ export default async function Dashboard() {
                 Profile
               </a>
             </Button>
-            <Button variant="ghost" className="w-full justify-start" asChild>
-              <a href="/courses" className="flex items-center gap-2">
-                <BookOpen size={18} />
-                Courses
-              </a>
-            </Button>
+            
             
             {/* Divider */}
             <div className="h-px bg-border my-2"></div>
             
             {/* Additional options */}
             <Button variant="ghost" className="w-full justify-start" asChild>
-              <a href="/college-recommendations" className="flex items-center gap-2">
+              <a href="/roadmap/foundation" className="flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-building">
                   <rect width="16" height="20" x="4" y="2" rx="2" ry="2" />
                   <path d="M9 22v-4h6v4" />
@@ -120,7 +115,7 @@ export default async function Dashboard() {
               </a>
             </Button>
             <Button variant="ghost" className="w-full justify-start" asChild>
-              <a href="/course-recommendations" className="flex items-center gap-2">
+              <a href="/roadmap/specialization" className="flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-list-checks">
                   <path d="m3 17 2 2 4-4" />
                   <path d="m3 7 2 2 4-4" />

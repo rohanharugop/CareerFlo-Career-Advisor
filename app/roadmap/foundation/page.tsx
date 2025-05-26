@@ -17,9 +17,21 @@ interface CollegeResponse {
   college: College;
 }
 
+interface FormData {
+  interest: string;
+  kcetRank: string;
+  budget: string;
+  background: string;
+}
+
 export default function Foundation() {
   const [submitted, setSubmitted] = useState(false)
-  const [userInput, setUserInput] = useState("")
+  const [formData, setFormData] = useState<FormData>({
+    interest: "",
+    kcetRank: "",
+    budget: "",
+    background: ""
+  })
   const [colleges, setColleges] = useState<College[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
@@ -35,12 +47,34 @@ export default function Foundation() {
     }
   }, [submitted, colleges.length])
 
+  const handleInputChange = (field: keyof FormData, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }))
+  }
+
+  const isFormValid = () => {
+    return formData.interest.trim() || formData.kcetRank.trim() || formData.budget.trim() || formData.background.trim()
+  }
+
+  const formatFormDataForAPI = () => {
+    const parts = []
+    if (formData.interest.trim()) parts.push(`Interest: ${formData.interest}`)
+    if (formData.kcetRank.trim()) parts.push(`KCET Rank: ${formData.kcetRank}`)
+    if (formData.budget.trim()) parts.push(`Budget: ${formData.budget}`)
+    if (formData.background.trim()) parts.push(`Background: ${formData.background}`)
+    return parts.join(', ')
+  }
+
   const handleSubmit = async () => {
     setLoading(true)
     setError("")
     setShowResults(false)
     
     try {
+      const userInput = formatFormDataForAPI()
+      
       const response = await fetch('/api/college-info', {
         method: 'POST',
         headers: {
@@ -124,6 +158,19 @@ export default function Foundation() {
     }
   }
 
+  const resetForm = () => {
+    setSubmitted(false)
+    setColleges([])
+    setError("")
+    setFormData({
+      interest: "",
+      kcetRank: "",
+      budget: "",
+      background: ""
+    })
+    setShowResults(false)
+  }
+
   return (
     <div className="flex min-h-screen flex-col">
       <header className="px-4 lg:px-6 h-14 flex items-center">
@@ -156,23 +203,81 @@ export default function Foundation() {
               </div>
               
               {!submitted ? (
-                <div className="mx-auto w-full max-w-xl animate-in slide-in-from-bottom-4 duration-700 delay-300">
-                  <div className="space-y-4">
+                <div className="mx-auto w-full max-w-2xl animate-in slide-in-from-bottom-4 duration-700 delay-300">
+                  <div className="space-y-6">
                     <div className="space-y-2">
-                      <label htmlFor="goal" className="text-sm font-medium">
-                        Find the right college or university for you
+                      <label htmlFor="goal" className="text-lg font-medium text-center block">
+                        Tell us about your preferences
                       </label>
-                      <Input
-                        id="goal"
-                        placeholder="Enter your education details, CET score, areas of interest, etc."
-                        className="w-full p-4 h-24"
-                        value={userInput}
-                        onChange={(e) => setUserInput(e.target.value)}
-                        disabled={loading}
-                      />
+                      <p className="text-sm text-gray-500 text-center">
+                        Fill in to get personalized college recommendations
+                      </p>
                     </div>
-                    <Button onClick={handleSubmit} className="w-full" disabled={loading || !userInput.trim()}>
-                      {loading ? 'Searching...' : 'Find College courses'}
+                    
+                    <div className="grid gap-4 md:grid-cols-2">
+                      <div className="space-y-2">
+                        <label htmlFor="interest" className="text-sm font-medium">
+                          Interest/Field of Study
+                        </label>
+                        <Input
+                          id="interest"
+                          placeholder="e.g., Computer Science, Mechanical Engineering, Medicine"
+                          value={formData.interest}
+                          onChange={(e) => handleInputChange('interest', e.target.value)}
+                          disabled={loading}
+                          className="h-12"
+                        />
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <label htmlFor="kcetRank" className="text-sm font-medium">
+                          KCET Rank
+                        </label>
+                        <Input
+                          id="kcetRank"
+                          placeholder="e.g., 5000, 15000"
+                          value={formData.kcetRank}
+                          onChange={(e) => handleInputChange('kcetRank', e.target.value)}
+                          disabled={loading}
+                          className="h-12"
+                        />
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <label htmlFor="budget" className="text-sm font-medium">
+                          Budget (Annual Fees)
+                        </label>
+                        <Input
+                          id="budget"
+                          placeholder="e.g., ₹50,000, ₹2 lakhs, Under 1 lakh"
+                          value={formData.budget}
+                          onChange={(e) => handleInputChange('budget', e.target.value)}
+                          disabled={loading}
+                          className="h-12"
+                        />
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <label htmlFor="background" className="text-sm font-medium">
+                          Background/Category
+                        </label>
+                        <Input
+                          id="background"
+                          placeholder="e.g., General, SC/ST, OBC, Rural, Urban"
+                          value={formData.background}
+                          onChange={(e) => handleInputChange('background', e.target.value)}
+                          disabled={loading}
+                          className="h-12"
+                        />
+                      </div>
+                    </div>
+                    
+                    <Button 
+                      onClick={handleSubmit} 
+                      className="w-full h-12 text-base" 
+                      disabled={loading || !isFormValid()}
+                    >
+                      {loading ? 'Searching...' : 'Find College Courses'}
                     </Button>
                   </div>
                   
@@ -189,9 +294,35 @@ export default function Foundation() {
                     showResults ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
                   }`}>
                     <h2 className="text-2xl font-bold">Here's a list of College Courses and Programs</h2>
-                    <p className="text-gray-500 mt-2">
-                      Based on your criteria: <span className="font-medium text-black">{userInput}</span>
-                    </p>
+                    <div className="mt-4">
+                      <p className="text-gray-500 mb-2">Based on your criteria:</p>
+                      <ul className="text-sm text-white space-y-1 max-w-md mx-auto">
+                        {formData.interest.trim() && (
+                          <li className="flex items-center justify-center">
+                            <span className="font-medium text-white">Interest:</span>
+                            <span className="ml-2">{formData.interest}</span>
+                          </li>
+                        )}
+                        {formData.kcetRank.trim() && (
+                          <li className="flex items-center justify-center">
+                            <span className="font-medium text-white">KCET Rank:</span>
+                            <span className="ml-2">{formData.kcetRank}</span>
+                          </li>
+                        )}
+                        {formData.budget.trim() && (
+                          <li className="flex items-center justify-center">
+                            <span className="font-medium text-white">Budget:</span>
+                            <span className="ml-2">{formData.budget}</span>
+                          </li>
+                        )}
+                        {formData.background.trim() && (
+                          <li className="flex items-center justify-center">
+                            <span className="font-medium text-white">Background:</span>
+                            <span className="ml-2">{formData.background}</span>
+                          </li>
+                        )}
+                      </ul>
+                    </div>
                   </div>
                   
                   {error && (
@@ -226,7 +357,7 @@ export default function Foundation() {
                               <p className="mb-4 text-purple-200 text-lg">{college.CourseName}</p>
                               <ul className="list-disc list-inside space-y-3 text-base">
                                 <li className="text-gray-300 hover:text-purple-300 transition-colors">
-                                  <span className="font-bold text-white">Fees:</span> {college.Fees ? `₹${college.Fees.toLocaleString('en-IN')} LPA` : 'Not specified'}
+                                  <span className="font-bold text-white">Fees:</span> {college.Fees ? `₹${college.Fees.toLocaleString('en-IN')}` : 'Not specified'}
                                 </li>
                                 <li className="text-gray-300 hover:text-purple-300 transition-colors">
                                   <span className="font-bold text-white">Expected KCET Cutoff:</span> {college.ExpectedKCETCutoff || 'Not specified'}
@@ -257,14 +388,8 @@ export default function Foundation() {
                     showResults ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
                   }`} style={{ transitionDelay: `${500 + (colleges.length * 150)}ms` }}>
                     <Button 
-                      onClick={() => {
-                        setSubmitted(false)
-                        setColleges([])
-                        setError("")
-                        setUserInput("")
-                        setShowResults(false)
-                      }}
-                      className="bg-purple-600 hover:bg-purple-700 transition-colors duration-300"
+                      onClick={resetForm}
+                      className="bg-purple-900 hover:bg-purple-500 transition-colors-text duration-300"
                     >
                       Search Again
                     </Button>

@@ -67,81 +67,88 @@ export default function Specialization() {
                   </div>
                   
                   <div className="flex flex-col space-y-6 max-w-2xl mx-auto">
-                    <Card className="bg-white/10 backdrop-blur-sm border-2 border-purple-400/60 shadow-lg shadow-purple-900/50">
-                      <CardHeader>
-                        <CardTitle className="text-white">Course Name</CardTitle>
-                        <CardDescription className="text-gray-300">Course description in 1 line</CardDescription>
-                      </CardHeader>
-                      <CardContent className="text-white">
-                        <p>Course conductor</p>
-                        <ul className="list-disc list-inside mt-4 space-y-1 text-sm text-gray-200">
-                          <li>Some additional bs</li>
-                          <li>Some additional bs</li>
-                          <li>Some additional bs</li>
-                        </ul>
-                        <div className="mt-4 pt-4 border-t border-purple-400/40">
+                   <Card className={`relative bg-black border-0 shadow-lg transform transition-all duration-500 ease-out `}>
+                       <CardHeader className="bg-black">
+                              <CardTitle className="text-white text-xl font-bold">Course Name</CardTitle>
+                              <CardDescription className="text-purple-300 text-base">Course description in 1 line</CardDescription>
+                            </CardHeader>
+                            <CardContent className="bg-black">
+                              <p className="mb-4 text-purple-200 text-lg">Course name</p>
+                              <ul className="list-disc list-inside space-y-3 text-base">
+                                <li className="text-gray-300 hover:text-purple-300 transition-colors">
+                                  <span className="font-bold text-white">Some additional info:</span>                                </li>
+                                <li className="text-gray-300 hover:text-purple-300 transition-colors">
+                                  <span className="font-bold text-white">Some additional info</span>                                 </li>
+                                <li className="text-gray-300 hover:text-purple-300 transition-colors">
+                                  <span className="font-bold text-white">Some additional info</span>                                 </li>
+                              </ul>
                           <p className="text-sm font-medium mb-2 text-white">Learn more:</p>
                           <div className="flex flex-col space-y-1">
-                            <a href="https://youtu.be/dQw4w9WgXcQ?si=cv4UIJtyumyAPPcO" target="_blank" rel="noopener noreferrer" className="text-purple-300 hover:text-green-400 text-sm underline">
-                              Check it out
-                            </a>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                    
-                    <Card className="bg-white/10 backdrop-blur-sm border-2 border-purple-400/60 shadow-lg shadow-purple-900/50">
-                      <CardHeader>
-                        <CardTitle className="text-white">Course Name</CardTitle>
-                        <CardDescription className="text-gray-300">Course description in 1 line</CardDescription>
-                      </CardHeader>
-                      <CardContent className="text-white">
-                        <p>Course name.</p>
-                        <ul className="list-disc list-inside mt-4 space-y-1 text-sm text-gray-200">
-                          <li>Some additional bs</li>
-                          <li>Some additional bs</li>
-                          <li>Some additional bs</li>
-                        </ul>
-                        <div className="mt-4 pt-4 border-t border-purple-400/40">
-                          <p className="text-sm font-medium mb-2 text-white">Learn more:</p>
-                          <div className="flex flex-col space-y-1">
-                            <a href="https://youtu.be/dQw4w9WgXcQ?si=cv4UIJtyumyAPPcO" target="_blank" rel="noopener noreferrer" className="text-purple-300 hover:text-green-400 text-sm underline">
-                              Check it out
-                            </a>
-                           
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                    
-                    <Card className="bg-white/10 backdrop-blur-sm border-2 border-purple-400/60 shadow-lg shadow-purple-900/50">
-                     <CardHeader>
-                        <CardTitle className="text-white">Course Name</CardTitle>
-                        <CardDescription className="text-gray-300">Course description in 1 line</CardDescription>
-                      </CardHeader>
-                      <CardContent className="text-white">
-                        <p>Course name.</p>
-                        <ul className="list-disc list-inside mt-4 space-y-1 text-sm text-gray-200">
-                          <li>Some additional bs</li>
-                          <li>Some additional bs</li>
-                          <li>Some additional bs</li>
-                        </ul>
-                        <div className="mt-4 pt-4 border-t border-purple-400/40">
-                          <p className="text-sm font-medium mb-2 text-white">Learn more:</p>
-                          <div className="flex flex-col space-y-1">
-                            <a href="https://youtu.be/dQw4w9WgXcQ?si=cv4UIJtyumyAPPcO" target="_blank" rel="noopener noreferrer" className="text-purple-300 hover:text-green-400 text-sm underline">
+                            <a href="https://msrit.edu/" target="_blank" rel="noopener noreferrer" className="text-purple-300 hover:text-green-400 text-sm underline">
                               Check it out
                             </a>
                             
                           </div>
-                        </div>
-                      </CardContent>
+
+                            </CardContent>
+                    </Card>
+                    
+                    <Card className={`relative bg-black border-0 shadow-lg transform transition-all duration-500 ease-out `}>
+                       <CardHeader className="bg-black">
+                              <CardTitle className="text-white text-xl font-bold">Course Name</CardTitle>
+                              <CardDescription className="text-purple-300 text-base">Course description in 1 line</CardDescription>
+                            </CardHeader>
+                            <CardContent className="bg-black">
+                              <p className="mb-4 text-purple-200 text-lg">Course name</p>
+                              <ul className="list-disc list-inside space-y-3 text-base">
+                                <li className="text-gray-300 hover:text-purple-300 transition-colors">
+                                  <span className="font-bold text-white">Some additional info:</span>                                </li>
+                                <li className="text-gray-300 hover:text-purple-300 transition-colors">
+                                  <span className="font-bold text-white">Some additional info</span>                                 </li>
+                                <li className="text-gray-300 hover:text-purple-300 transition-colors">
+                                  <span className="font-bold text-white">Some additional info</span>                                 </li>
+                              </ul>
+                          <p className="text-sm font-medium mb-2 text-white">Learn more:</p>
+                          <div className="flex flex-col space-y-1">
+                            <a href="https://msrit.edu/" target="_blank" rel="noopener noreferrer" className="text-purple-300 hover:text-green-400 text-sm underline">
+                              Check it out
+                            </a>
+                            
+                          </div>
+
+                            </CardContent>
+                    </Card>
+                    
+                    <Card className={`relative bg-black border-0 shadow-lg transform transition-all duration-500 ease-out `}>
+                       <CardHeader className="bg-black">
+                              <CardTitle className="text-white text-xl font-bold">Course Name</CardTitle>
+                              <CardDescription className="text-purple-300 text-base">Course description in 1 line</CardDescription>
+                            </CardHeader>
+                            <CardContent className="bg-black">
+                              <p className="mb-4 text-purple-200 text-lg">Course name</p>
+                              <ul className="list-disc list-inside space-y-3 text-base">
+                                <li className="text-gray-300 hover:text-purple-300 transition-colors">
+                                  <span className="font-bold text-white">Some additional info:</span>                                </li>
+                                <li className="text-gray-300 hover:text-purple-300 transition-colors">
+                                  <span className="font-bold text-white">Some additional info</span>                                 </li>
+                                <li className="text-gray-300 hover:text-purple-300 transition-colors">
+                                  <span className="font-bold text-white">Some additional info</span>                                 </li>
+                              </ul>
+                          <p className="text-sm font-medium mb-2 text-white">Learn more:</p>
+                          <div className="flex flex-col space-y-1">
+                            <a href="https://msrit.edu/" target="_blank" rel="noopener noreferrer" className="text-purple-300 hover:text-green-400 text-sm underline">
+                              Check it out
+                            </a>
+                            
+                          </div>
+
+                            </CardContent>
                     </Card>
                   </div>
                   
                   <div className="flex justify-center mt-8">
                     <Button onClick={() => setSubmitted(false)} className="bg-purple-600 hover:bg-purple-700 text-white border-2 border-purple-500">
-                      Do this crap again
+                      Regenerate
                     </Button>
                   </div>
                 </div>

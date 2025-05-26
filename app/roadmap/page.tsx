@@ -12,6 +12,8 @@ export default function Roadmap() {
   const router = useRouter();
   const [profile, setProfile] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
+  const [lastClickedNode, setLastClickedNode] = useState<number>(1); // Track last clicked node
   const supabase = createClient();
 
   useEffect(() => {
@@ -44,6 +46,11 @@ export default function Roadmap() {
 
     fetchProfile();
   }, [router, supabase]);
+
+  const handleNodeClick = (nodeNumber: number, href: string) => {
+    setLastClickedNode(nodeNumber);
+    router.push(href);
+  };
 
   if (loading) {
     return (
@@ -81,28 +88,46 @@ export default function Roadmap() {
           </p>
 
           {/* Roadmap Visualization */}
-          <div className="relative w-full h-[600px] mb-16">
+          <div 
+            className="relative w-full h-[600px] mb-16 cursor-pointer"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
             
             {/* SVG Road Path */}
             <svg 
-              className="absolute inset-0 w-full h-full" 
+              className="absolute inset-0 w-full h-full transition-all duration-300" 
               viewBox="0 0 1000 500" 
               fill="none" 
               xmlns="http://www.w3.org/2000/svg"
-              style={{ filter: "drop-shadow(0px 2px 8px rgba(12, 1, 16, 0))" }}
-              >
+              style={{ 
+                filter: isHovered 
+                  ? "drop-shadow(0px 4px 12px rgb(139, 92, 246))" 
+                  : "drop-shadow(0px 2px 4px rgb(204, 175, 215))" 
+              }}
+            >
+
+              {/* Purple backdrop - widest layer with hover effect */}
+              <path 
+                d="M50,250 C180,60 400,440 500,250 C600,60 820,250 940,250" 
+                stroke="#8B5CF6" 
+                strokeWidth="60"
+                strokeLinecap="round"
+                opacity={isHovered ? "0.6" : "0.0"}
+                className="transition-all duration-200"
+              />
 
               {/* Main curved path */}
               <path 
                 d="M60,250 C180,60 400,440 500,250 C600,60 820,250 940,250" 
-                stroke="currentColor" 
+                stroke="rgb(20, 1, 1)" 
                 strokeWidth="90"
                 strokeLinecap="round"
                 className="text-muted/50 dark:text-muted/30"
               />
               <path 
                 d="M60,250 C180,60 400,440 500,250 C600,60 820,250 940,250" 
-                stroke="rgba(12, 4, 47, 0.1)" 
+                stroke="rgba(2, 0, 10, 0.91)" 
                 strokeWidth="0"
                 strokeLinecap="square"
                 className="text-muted/10 dark:text-muted/10"
@@ -111,7 +136,7 @@ export default function Roadmap() {
               {/* Path border top */}
               <path 
                 d="M60,250 C180,60 400,440 500,250 C600,60 820,250 940,250" 
-                stroke="rgba(27, 4, 47, 0.1)" 
+                stroke="rgba(2, 0, 3, 0.92)" 
                 strokeWidth="84"
                 strokeLinecap="round"
                 className="text-muted/30 dark:text-muted/10"
@@ -121,7 +146,7 @@ export default function Roadmap() {
               {/* Path lines */}
               <path 
                d="M60,250 C180,60 400,440 500,250 C600,60 820,250 940,250" 
-               stroke="rgba(216, 109, 15, 0.72)" 
+               stroke="rgba(204, 192, 31, 0.72)" 
                strokeWidth="8"
                strokeLinecap="round"
                strokeDasharray="20,20"
@@ -136,8 +161,9 @@ export default function Roadmap() {
                 number={1}
                 title="College Recommendations"
                 description="Find the right college for you"
-                active={true}
+                active={lastClickedNode === 1}
                 href="/roadmap/foundation"
+                onClick={handleNodeClick}
               />
             </div>
 
@@ -146,8 +172,9 @@ export default function Roadmap() {
                 number={2}
                 title="Online Courses"
                 description="Develop foundational skills"
-                active={false}
+                active={lastClickedNode === 2}
                 href="/roadmap/specialization"
+                onClick={handleNodeClick}
               />
             </div>
 
@@ -156,8 +183,9 @@ export default function Roadmap() {
                 number={3}
                 title="Build My Portfolio"
                 description="Create a portfolio to showcase your skills"
-                active={false}
+                active={lastClickedNode === 3}
                 href="/roadmap/career"
+                onClick={handleNodeClick}
               />
             </div>
           </div>
@@ -173,16 +201,16 @@ export default function Roadmap() {
               
               <div className="grid gap-4 md:grid-cols-3 mt-6">
                 <div className="p-4 rounded-lg border bg-card text-card-foreground shadow-sm">
-                  <h3 className="font-semibold mb-2">1. Foundation Skills</h3>
-                  <p className="text-sm text-muted-foreground">Build fundamental knowledge and develop core competencies.</p>
+                  <h3 className="font-semibold mb-2">1. College Recommendations</h3>
+                  <p className="text-sm text-muted-foreground">Find the ideal college for you with our RAG recommendation system.</p>
                 </div>
                 <div className="p-4 rounded-lg border bg-card text-card-foreground shadow-sm">
-                  <h3 className="font-semibold mb-2">2. Specialization</h3>
-                  <p className="text-sm text-muted-foreground">Choose your specialization path and deepen your expertise.</p>
+                  <h3 className="font-semibold mb-2">2.Course Suggestions </h3>
+                  <p className="text-sm text-muted-foreground">Get started with building real-life skills with introductory courses.</p>
                 </div>
                 <div className="p-4 rounded-lg border bg-card text-card-foreground shadow-sm">
-                  <h3 className="font-semibold mb-2">3. Career Ready</h3>
-                  <p className="text-sm text-muted-foreground">Prepare for industry with portfolio projects and interview prep.</p>
+                  <h3 className="font-semibold mb-2">3. Resume Builder</h3>
+                  <p className="text-sm text-muted-foreground">Create a resume tailored to match your needs and highlight your skills.</p>
                 </div>
               </div>
             </CardContent>
@@ -199,30 +227,31 @@ function RoadmapNode({
   title, 
   description, 
   active, 
-  href 
+  href,
+  onClick
 }: { 
   number: number;
   title: string;
   description: string;
   active: boolean;
   href: string;
+  onClick: (nodeNumber: number, href: string) => void;
 }) {
-  const router = useRouter();
   
   return (
     <div className="flex flex-col items-center">
       <Button
-        onClick={() => router.push(href)}
+        onClick={() => onClick(number, href)}
         className={`w-16 h-16 rounded-full text-lg font-bold flex items-center justify-center relative ${
           active 
-            ? "bg-primary hover:bg-primary/90 text-primary-foreground"
-            : "bg-muted hover:bg-muted/90 text-muted-foreground"
+            ? "bg-primary hover:bg-primary text-primary-foreground"
+            : "bg-muted hover:bg-muted text-muted-foreground"
         }`}
       >
         {number}
         {/* Pulsing animation for active node */}
         {active && (
-          <span className="absolute inset-0 rounded-full animate-ping bg-primary/50 opacity-75"></span>
+          <span className="absolute inset-0 rounded-full animate-ping bg-primary/50 opacity-70"></span>
         )}
       </Button>
       <div className="mt-2 bg-card shadow-lg rounded-lg p-3 text-center w-44 border">
