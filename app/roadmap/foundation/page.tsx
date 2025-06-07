@@ -394,6 +394,39 @@ export default function Foundation() {
                       Search Again
                     </Button>
                   </div>
+
+                  {/* Save Colleges Button */}
+                  <div className={`flex justify-center mt-4 transform transition-all duration-700 ease-out ${
+                    showResults ? 'translate-y-0 opacity-100' : '-translate-y-8 opacity-0'
+                  }`} style={{ transitionDelay: `${600 + (colleges.length * 150)}ms` }}>
+                    <Button
+                      className="bg-green-700 hover:bg-green-600 text-white"
+                      disabled={colleges.length === 0}
+                      onClick={async () => {
+                        try {
+                          const res = await fetch('/api/save-college', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(colleges),
+                          });
+                          if (res.redirected) {
+                            window.location.href = res.url;
+                            return;
+                          }
+                          const data = await res.json();
+                          if (res.ok) {
+                            alert('Colleges saved successfully!');
+                          } else {
+                            alert(data.error || 'Failed to save colleges');
+                          }
+                        } catch (err) {
+                          alert('Failed to save colleges');
+                        }
+                      }}
+                    >
+                      Save Colleges
+                    </Button>
+                  </div>
                 </div>
               )}
             </div>

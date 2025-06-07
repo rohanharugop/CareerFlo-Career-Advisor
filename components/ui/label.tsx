@@ -1,9 +1,7 @@
-"use client"
-
+// components/ui/label.tsx
 import * as React from "react"
 import * as LabelPrimitive from "@radix-ui/react-label"
 import { cva, type VariantProps } from "class-variance-authority"
-
 import { cn } from "@/lib/utils"
 
 const labelVariants = cva(
@@ -24,3 +22,18 @@ const Label = React.forwardRef<
 Label.displayName = LabelPrimitive.Root.displayName
 
 export { Label }
+
+// components/ui/use-toast.ts (or you can use react-hot-toast)
+import { toast as hotToast } from 'react-hot-toast'
+
+export const toast = ({ title, description, variant }: {
+  title: string
+  description: string
+  variant?: 'default' | 'destructive'
+}) => {
+  if (variant === 'destructive') {
+    hotToast.error(`${title}: ${description}`)
+  } else {
+    hotToast.success(`${title}: ${description}`)
+  }
+}

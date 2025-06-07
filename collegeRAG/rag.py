@@ -1,9 +1,8 @@
 import os
 from dotenv import load_dotenv
 load_dotenv()
-
-from langchain.embeddings import HuggingFaceEmbeddings
-from langchain.vectorstores import Chroma
+from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_community.vectorstores import Chroma
 from langchain_core.runnables import RunnablePassthrough
 from langchain.schema.output_parser import StrOutputParser
 from langchain.prompts import PromptTemplate
@@ -35,7 +34,7 @@ College {
   ExpectedKCETCutoff: number;
   CompanyNames: string[];
 }
-- make sure that the return type is a **list of JSON objects**
+- make sure that the return type is a **list of 3 JSON objects**
 - Ensure that you do not return any other information apart from the list of JSON object
 - If the fees for a particular course is not explicilty mentioned in context, use fees of similar course instead.
 - Ensure all string values are enclosed in double quotes.

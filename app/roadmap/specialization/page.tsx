@@ -5,21 +5,93 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
+interface Course {
+  CourseName: string;
+  CourseDescrption: string;
+  CourseLink: string;
+}
+
 export default function Specialization() {
   const [submitted, setSubmitted] = useState(false)
   const [userInput, setUserInput] = useState("")
+  const [loading, setLoading] = useState(false)
+  const [course, setCourse] = useState<Course | null>(null)
+  const [error, setError] = useState("")
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setSubmitted(true)
+    
+    if (!userInput.trim()) {
+      setError("Please enter your interests and career goals")
+      return
+    }
+
+    setLoading(true)
+    setError("")
+    
+    try {
+      const response = await fetch('/api/recommend-course', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ topic: userInput }),
+      })
+
+      // Check if response is HTML (common when server is down)
+      const contentType = response.headers.get('content-type')
+      if (!contentType || !contentType.includes('application/json')) {
+        const text = await response.text()
+        console.error('Non-JSON response received:', text.substring(0, 200))
+        throw new Error('Server returned non-JSON response. Make sure your Flask server is running on port 5000.')
+      }
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || `Server error: ${response.status}`)
+      }
+
+      console.log('API Response:', data) // Debug log
+
+      // Parse the response from your Flask API - expecting single course
+      if (data.response && data.response.CourseName) {
+        setCourse(data.response)
+        setSubmitted(true)
+      } else {
+        console.error('Unexpected response format:', data)
+        throw new Error('Invalid response format from server')
+      }
+      
+    } catch (err) {
+      console.error('Error fetching course recommendations:', err)
+      if (err instanceof Error) {
+        if (err.message.includes('fetch')) {
+          setError('Unable to connect to server. Please make sure your Flask API is running.')
+        } else {
+          setError(err.message)
+        }
+      } else {
+        setError('Something went wrong')
+      }
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleReset = () => {
+    setSubmitted(false)
+    setCourse(null)
+    setError("")
+    setUserInput("")
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-gradient-to-br from-black-500 via-black-4 00 to-black-600 text-green">
+    <div className="flex min-h-screen flex-col bg-gradient-to-br from-black-500 via-black-400 to-black-600 text-green">
       <header className="px-4 lg:px-6 h-14 flex items-center">
         <div className="flex w-full justify-between">
           <a className="flex items-center justify-center" href="#">
-            <span className="font-bold text-xl text-">Student Portal</span>
+            <span className="font-bold text-xl text-white">Student Portal</span>
           </a>
         </div>
       </header>
@@ -50,105 +122,76 @@ export default function Specialization() {
                         className="w-full p-4 h-24 bg-white/10 border-2 border-purple-400/50 text-white placeholder:text-gray-300"
                         value={userInput}
                         onChange={(e) => setUserInput(e.target.value)}
+                        disabled={loading}
                       />
                     </div>
-                    <Button type="submit" className="w-full bg-purple-300 hover:bg-purple-500 text-black border-2 border-purple-900">
-                      Find College courses
+                    
+                    {error && (
+                      <div className="text-red-400 text-sm text-center">
+                        {error}
+                      </div>
+                    )}
+                    
+                    <Button 
+                      type="submit" 
+                      className="w-full bg-purple-300 hover:bg-purple-500 text-black border-2 border-purple-900"
+                      disabled={loading}
+                    >
+                      {loading ? "Finding Courses..." : "Find College courses"}
                     </Button>
                   </form>
                 </div>
               ) : (
                 <div className="space-y-6">
                   <div className="text-center">
-                    <h2 className="text-2xl font-bold text-white">Here's a list of Online courses we found for you</h2>
+                    <h2 className="text-2xl font-bold text-white">Here's an online course we found for you</h2>
                     <p className="text-gray-300 mt-2">
                       Based on your criteria: <span className="font-medium text-white">{userInput}</span>
                     </p>
                   </div>
                   
-                  <div className="flex flex-col space-y-6 max-w-2xl mx-auto">
-                   <Card className={`relative bg-black border-0 shadow-lg transform transition-all duration-500 ease-out `}>
-                       <CardHeader className="bg-black">
-                              <CardTitle className="text-white text-xl font-bold">Course Name</CardTitle>
-                              <CardDescription className="text-purple-300 text-base">Course description in 1 line</CardDescription>
-                            </CardHeader>
-                            <CardContent className="bg-black">
-                              <p className="mb-4 text-purple-200 text-lg">Course name</p>
-                              <ul className="list-disc list-inside space-y-3 text-base">
-                                <li className="text-gray-300 hover:text-purple-300 transition-colors">
-                                  <span className="font-bold text-white">Some additional info:</span>                                </li>
-                                <li className="text-gray-300 hover:text-purple-300 transition-colors">
-                                  <span className="font-bold text-white">Some additional info</span>                                 </li>
-                                <li className="text-gray-300 hover:text-purple-300 transition-colors">
-                                  <span className="font-bold text-white">Some additional info</span>                                 </li>
-                              </ul>
+                  {course ? (
+                    <div className="flex flex-col space-y-6 max-w-2xl mx-auto">
+                      <Card className="relative bg-black border-0 shadow-lg transform transition-all duration-500 ease-out">
+                        <CardHeader className="bg-black">
+                          <CardTitle className="text-white text-xl font-bold">
+                            {course.CourseName}
+                          </CardTitle>
+                          <CardDescription className="text-purple-300 text-base">
+                            {course.CourseDescrption}
+                          </CardDescription>
+                        </CardHeader>
+                        <CardContent className="bg-black">
+                          <p className="mb-4 text-purple-200 text-lg">
+                            {course.CourseDescrption}
+                          </p>
+                          
                           <p className="text-sm font-medium mb-2 text-white">Learn more:</p>
                           <div className="flex flex-col space-y-1">
-                            <a href="https://msrit.edu/" target="_blank" rel="noopener noreferrer" className="text-purple-300 hover:text-green-400 text-sm underline">
+                            <a 
+                              href={course.CourseLink} 
+                              target="_blank" 
+                              rel="noopener noreferrer" 
+                              className="text-purple-300 hover:text-green-400 text-sm underline"
+                            >
                               Check it out
                             </a>
-                            
                           </div>
-
-                            </CardContent>
-                    </Card>
-                    
-                    <Card className={`relative bg-black border-0 shadow-lg transform transition-all duration-500 ease-out `}>
-                       <CardHeader className="bg-black">
-                              <CardTitle className="text-white text-xl font-bold">Course Name</CardTitle>
-                              <CardDescription className="text-purple-300 text-base">Course description in 1 line</CardDescription>
-                            </CardHeader>
-                            <CardContent className="bg-black">
-                              <p className="mb-4 text-purple-200 text-lg">Course name</p>
-                              <ul className="list-disc list-inside space-y-3 text-base">
-                                <li className="text-gray-300 hover:text-purple-300 transition-colors">
-                                  <span className="font-bold text-white">Some additional info:</span>                                </li>
-                                <li className="text-gray-300 hover:text-purple-300 transition-colors">
-                                  <span className="font-bold text-white">Some additional info</span>                                 </li>
-                                <li className="text-gray-300 hover:text-purple-300 transition-colors">
-                                  <span className="font-bold text-white">Some additional info</span>                                 </li>
-                              </ul>
-                          <p className="text-sm font-medium mb-2 text-white">Learn more:</p>
-                          <div className="flex flex-col space-y-1">
-                            <a href="https://msrit.edu/" target="_blank" rel="noopener noreferrer" className="text-purple-300 hover:text-green-400 text-sm underline">
-                              Check it out
-                            </a>
-                            
-                          </div>
-
-                            </CardContent>
-                    </Card>
-                    
-                    <Card className={`relative bg-black border-0 shadow-lg transform transition-all duration-500 ease-out `}>
-                       <CardHeader className="bg-black">
-                              <CardTitle className="text-white text-xl font-bold">Course Name</CardTitle>
-                              <CardDescription className="text-purple-300 text-base">Course description in 1 line</CardDescription>
-                            </CardHeader>
-                            <CardContent className="bg-black">
-                              <p className="mb-4 text-purple-200 text-lg">Course name</p>
-                              <ul className="list-disc list-inside space-y-3 text-base">
-                                <li className="text-gray-300 hover:text-purple-300 transition-colors">
-                                  <span className="font-bold text-white">Some additional info:</span>                                </li>
-                                <li className="text-gray-300 hover:text-purple-300 transition-colors">
-                                  <span className="font-bold text-white">Some additional info</span>                                 </li>
-                                <li className="text-gray-300 hover:text-purple-300 transition-colors">
-                                  <span className="font-bold text-white">Some additional info</span>                                 </li>
-                              </ul>
-                          <p className="text-sm font-medium mb-2 text-white">Learn more:</p>
-                          <div className="flex flex-col space-y-1">
-                            <a href="https://msrit.edu/" target="_blank" rel="noopener noreferrer" className="text-purple-300 hover:text-green-400 text-sm underline">
-                              Check it out
-                            </a>
-                            
-                          </div>
-
-                            </CardContent>
-                    </Card>
-                  </div>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  ) : (
+                    <div className="text-center text-gray-300">
+                      <p>No course found. Please try with different keywords.</p>
+                    </div>
+                  )}
                   
                   <div className="flex justify-center mt-8">
-                    <Button onClick={() => setSubmitted(false)} className="bg-purple-600 hover:bg-purple-700 text-white border-2 border-purple-500">
-                      Regenerate
+                    <Button 
+                      onClick={handleReset} 
+                      className="bg-purple-600 hover:bg-purple-700 text-white border-2 border-purple-500"
+                    >
+                      Search Again
                     </Button>
                   </div>
                 </div>

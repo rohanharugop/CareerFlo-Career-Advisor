@@ -159,7 +159,7 @@ export default function Roadmap() {
             <div className="absolute top-[240px] left-[100px] transform -translate-x-1/2 -translate-y-1/2">
               <RoadmapNode 
                 number={1}
-                title="College Recommendations"
+                title="College Suggestions"
                 description="Find the right college for you"
                 active={lastClickedNode === 1}
                 href="/roadmap/foundation"

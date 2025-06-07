@@ -35,6 +35,41 @@ export interface Database {
           updated_at?: string
         }
       }
+      college: {
+        Row: {
+          id: string
+          email: string
+          name: string
+          course_name: string
+          fees: number
+          expected_kcet_cutoff: number
+          company_names: string[]
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          email: string
+          name: string
+          course_name: string
+          fees: number
+          expected_kcet_cutoff: number
+          company_names?: string[]
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          email?: string
+          name?: string
+          course_name?: string
+          fees?: number
+          expected_kcet_cutoff?: number
+          company_names?: string[]
+          created_at?: string
+          updated_at?: string
+        }
+      }
     }
   }
 }

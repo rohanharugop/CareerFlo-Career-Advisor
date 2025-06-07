@@ -1,44 +1,38 @@
-// app/api/save-college/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-
-const FLASK_SERVER_URL = process.env.FLASK_SERVER_URL || 'http://localhost:5000';
+import { createClient } from '@/lib/supabase/server';
 
 export async function POST(request: NextRequest) {
   try {
-    const collegeData = await request.json();
-    
-    // Forward request to Flask server
-    const flaskResponse = await fetch(`${FLASK_SERVER_URL}/save-college`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(collegeData),
-    });
+    // Create Supabase client and get session
+    const supabase = createClient();
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
 
-    if (!flaskResponse.ok) {
-      throw new Error(`Flask server responded with status: ${flaskResponse.status}`);
-    }
-
-    const data = await flaskResponse.json();
-    return NextResponse.json(data);
-    
-  } catch (error) {
-    console.error('Error saving college data:', error);
-    
-    if (error instanceof TypeError && error.message.includes('fetch')) {
+    // Check session validity
+    if (!session) {
       return NextResponse.json(
-        { 
-          error: 'Flask server is not running',
-          message: 'Please make sure the Python Flask server is running on port 5000'
-        },
-        { status: 503 }
+        { error: 'Unauthorized: Session is invalid or expired' },
+        { status: 401 }
       );
     }
-    
+
+    const colleges = await request.json();
+
+    if (!Array.isArray(colleges) || colleges.length === 0) {
+      return NextResponse.json(
+        { error: 'Input must be a non-empty array of colleges' },
+        { status: 400 }
+      );
+    }
+
+    // TODO: Save the colleges array to your database or storage here.
+
+    return NextResponse.json({ message: 'Colleges saved successfully', colleges });
+  } catch (error) {
     return NextResponse.json(
-      { 
-        error: 'Internal server error',
+      {
+        error: 'Failed to save colleges',
         message: error instanceof Error ? error.message : 'Unknown error'
       },
       { status: 500 }
