@@ -4,6 +4,8 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import SavedCollegesSection from "@/components/SavedCollegesSection"
+import { createClient } from "@/lib/supabase/client"
 
 interface College {
   name: string;
@@ -36,6 +38,35 @@ export default function Foundation() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
   const [showResults, setShowResults] = useState(false)
+  const [savedColleges, setSavedColleges] = useState<any[]>([])
+  const [loadingSavedColleges, setLoadingSavedColleges] = useState(true)
+
+  // Fetch saved colleges on component mount
+  useEffect(() => {
+    const fetchSavedColleges = async () => {
+      try {
+        const supabase = createClient()
+        const { data: { session } } = await supabase.auth.getSession()
+        
+        if (session) {
+          const { data: savedCollegesData } = await supabase
+            .from("college")
+            .select("*")
+            .eq("email", session.user.email)
+            .order("created_at", { ascending: false })
+            .limit(3)
+          
+          setSavedColleges(savedCollegesData || [])
+        }
+      } catch (error) {
+        console.error('Error fetching saved colleges:', error)
+      } finally {
+        setLoadingSavedColleges(false)
+      }
+    }
+
+    fetchSavedColleges()
+  }, [])
 
   // Trigger animation when results are ready
   useEffect(() => {
@@ -171,6 +202,29 @@ export default function Foundation() {
     setShowResults(false)
   }
 
+  const refreshSavedColleges = async () => {
+    setLoadingSavedColleges(true)
+    try {
+      const supabase = createClient()
+      const { data: { session } } = await supabase.auth.getSession()
+      
+      if (session) {
+        const { data: savedCollegesData } = await supabase
+          .from("college")
+          .select("*")
+          .eq("email", session.user.email)
+          .order("created_at", { ascending: false })
+          .limit(3)
+        
+        setSavedColleges(savedCollegesData || [])
+      }
+    } catch (error) {
+      console.error('Error refreshing saved colleges:', error)
+    } finally {
+      setLoadingSavedColleges(false)
+    }
+  }
+
   return (
     <div className="flex min-h-screen flex-col">
       <header className="px-4 lg:px-6 h-14 flex items-center">
@@ -201,6 +255,13 @@ export default function Foundation() {
                   <br />
                 </p>
               </div>
+              
+              {/* Saved Colleges Section */}
+              {!loadingSavedColleges && (
+                <div className="max-w-4xl mx-auto w-full mb-8">
+                  <SavedCollegesSection savedColleges={savedColleges} />
+                </div>
+              )}
               
               {!submitted ? (
                 <div className="mx-auto w-full max-w-2xl animate-in slide-in-from-bottom-4 duration-700 delay-300">
@@ -416,6 +477,8 @@ export default function Foundation() {
                           const data = await res.json();
                           if (res.ok) {
                             alert('Colleges saved successfully!');
+                            // Refresh saved colleges after saving
+                            await refreshSavedColleges();
                           } else {
                             alert(data.error || 'Failed to save colleges');
                           }

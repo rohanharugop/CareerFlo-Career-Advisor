@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Home, User, BookOpen, Edit, LogOut } from "lucide-react"
 import ThemeToggle from "@/components/ThemeToggle"
+import SavedCollegesSection from "@/components/SavedCollegesSection"
 
 export default async function Dashboard() {
   const supabase = createClient()
@@ -18,37 +19,31 @@ export default async function Dashboard() {
 
   // Get user profile
   const { data: profile } = await supabase.from("profiles").select("*").eq("id", session.user.id).single()
+  const { data: savedColleges } = await supabase.from("college").select("*").eq("email", session.user.email).order("created_at", { ascending: false }).limit(3)
 
   // If no profile, redirect to questionnaire
   if (!profile) {
     redirect("/questionnaire")
   }
 
+  
+
   // Server action for sign out
   async function handleSignOut() {
     "use server"
     const supabase = createClient()
-    
     try {
-      // Sign out from Supabase
       await supabase.auth.signOut({ scope: 'global' })
-      
-      // Clear all possible session storage
       const { cookies } = await import('next/headers')
       const cookieStore = await cookies()
-      
-      // Remove Supabase session cookies
       cookieStore.getAll().forEach(cookie => {
         if (cookie.name.includes('supabase') || cookie.name.includes('sb-')) {
           cookieStore.delete(cookie.name)
         }
       })
-      
     } catch (error) {
       console.error('Sign out error:', error)
     }
-    
-    // Clear cache and force redirect
     revalidatePath('/', 'layout')
     revalidatePath('/dashboard', 'page')
     redirect("/")
@@ -129,7 +124,7 @@ export default async function Dashboard() {
             <Button variant="ghost" className="w-full justify-start" asChild>
               <a href="/resume-builder" className="flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-file-text">
-                  <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                  <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2-2V7.5L14.5 2z" />
                   <polyline points="14 2 14 8 20 8" />
                   <line x1="16" x2="8" y1="13" y2="13" />
                   <line x1="16" x2="8" y1="17" y2="17" />
@@ -206,6 +201,9 @@ export default async function Dashboard() {
                 </div>
               </CardContent>
             </Card>
+
+            {/* Saved Colleges Section with Toggle */}
+            <SavedCollegesSection savedColleges={savedColleges} />
 
             {/* Bottom centered Build Roadmap button */}
             <div className="flex justify-center mt-20 mb-12">
