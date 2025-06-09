@@ -3,7 +3,7 @@ import { redirect } from "next/navigation"
 import { revalidatePath } from "next/cache"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Home, User, BookOpen, Edit, LogOut } from "lucide-react"
+import { Home, User, BookOpen, Edit, LogOut, GraduationCap } from "lucide-react"
 import ThemeToggle from "@/components/ThemeToggle"
 import SavedCollegesSection from "@/components/SavedCollegesSection"
 
@@ -20,6 +20,7 @@ export default async function Dashboard() {
   // Get user profile
   const { data: profile } = await supabase.from("profiles").select("*").eq("id", session.user.id).single()
   const { data: savedColleges } = await supabase.from("college").select("*").eq("email", session.user.email).order("created_at", { ascending: false }).limit(3)
+  const { data: savedCourses } = await supabase.from("courses").select("*").eq("email", session.user.email).limit(3)
 
   // If no profile, redirect to questionnaire
   if (!profile) {
@@ -202,8 +203,64 @@ export default async function Dashboard() {
               </CardContent>
             </Card>
 
-            {/* Saved Colleges Section with Toggle */}
+            {/* Saved Colleges Section */}
             <SavedCollegesSection savedColleges={savedColleges} />
+
+            {/* Saved Courses Section */}
+            <Card className="mb-6">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <GraduationCap size={20} />
+                  Your Courses
+                </CardTitle>
+                <CardDescription>
+                  Courses you've saved or enrolled in
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                {savedCourses && savedCourses.length > 0 ? (
+                  <div className="space-y-4">
+                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                      {savedCourses.map((course) => (
+                        <Card key={course.id} className="border-l-4 border-l-blue-500">
+                          <CardContent className="p-4">
+                            <h4 className="font-semibold text-sm mb-2">{course.coursename}</h4>
+                            {course.coursedescrption && (
+                              <p className="text-xs text-muted-foreground mb-3 line-clamp-2">
+                                {course.coursedescrption}
+                              </p>
+                            )}
+                            {course.courselink && (
+                              <Button variant="outline" size="sm" className="w-full" asChild>
+                                <a href={course.courselink} target="_blank" rel="noopener noreferrer">
+                                  View Course
+                                </a>
+                              </Button>
+                            )}
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                    <div className="flex justify-center">
+                      <Button variant="outline" asChild>
+                        <a href="/courses">View All Courses</a>
+                      </Button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-center py-8">
+                    <GraduationCap className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
+                    <h3 className="text-lg font-semibold mb-2">No courses yet</h3>
+                    <p className="text-muted-foreground mb-4">
+                      Start exploring courses to build your skills
+                    </p>
+                    <Button asChild>
+                      <a href="/roadmap/specialization">Explore Courses</a>
+                    </Button>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
 
             {/* Bottom centered Build Roadmap button */}
             <div className="flex justify-center mt-20 mb-12">

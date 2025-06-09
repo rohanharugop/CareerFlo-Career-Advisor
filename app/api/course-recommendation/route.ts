@@ -1,6 +1,20 @@
 // app/api/course-recommendation/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 
+interface FlaskResponse {
+  result: {
+    CourseName: string;
+    CourseDescrption: string;
+    CourseLink: string;
+  };
+}
+
+interface CourseRecommendation {
+  CourseName: string;
+  CourseDescrption: string;
+  CourseLink: string;
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -15,13 +29,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Adjust field name to match what Flask expects: 'topic'
+    // Call Flask API
     const flaskResponse = await fetch('http://localhost:5000/recommend-course', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ topic: prompt }),  // ✅ Correct field
+      body: JSON.stringify({ prompt }),
     });
 
     if (!flaskResponse.ok) {
@@ -29,8 +43,24 @@ export async function POST(request: NextRequest) {
       throw new Error(`Flask server error: ${flaskResponse.status} - ${errorText}`);
     }
 
-    const data = await flaskResponse.json();
-    return NextResponse.json(data);
+    const flaskData: FlaskResponse = await flaskResponse.json();
+    
+    // Extract the course data from the nested result structure
+    const courseData = flaskData.result;
+
+    // Validate that we have the expected course data structure
+    if (!courseData.CourseName || !courseData.CourseDescrption || !courseData.CourseLink) {
+      console.warn('Incomplete course data received:', courseData);
+    }
+
+    // Return the course recommendation data
+    return NextResponse.json({
+      success: true,
+
+      course: courseData
+    });
+
+    // return NextResponse.json(courseData);
 
   } catch (error) {
     console.error('API Error:', error);

@@ -1,13 +1,14 @@
 from flask import Flask, request, jsonify
 import rag
 from course_recommendation import GroqLlama3Client
+import course_rag
 
 app = Flask(__name__)
 
 # In-memory storage for demonstration
 saved_colleges = []
 
-groq_client = GroqLlama3Client()
+# groq_client = GroqLlama3Client()
 
 @app.route('/college-info', methods=['POST'])
 def college_info():
@@ -35,23 +36,21 @@ def save_college():
     except Exception:
         return jsonify({"status": "failure"}), 500
 
+from flask import jsonify
+
+from flask import Flask, request, jsonify
+import course_rag
+
+
 @app.route('/recommend-course', methods=['POST'])
 def recommend_course():
     data = request.get_json()
-    topic = data.get("topic")
+    response = course_rag.call_rag(data['prompt'])
+    return jsonify({"result": response['result']})
 
-    if not topic:
-        return jsonify({"error": "Missing 'topic' field in request body"}), 400
+if __name__ == '__main__':
+    app.run(port=5000)
 
-    result = groq_client.get_course_recommendation(topic)
-
-    if result["success"]:
-        print("Groq response:", result["content"])  # Print response to console
-        return jsonify({"response": result["content"]})  # ✅ Proper dictionary
-
-    else:
-        print("Groq error:", result["error"])  # Print error to console
-        return jsonify({"error": result["error"]}), result["status_code"]
     
 
 @app.route('/', methods=['GET'])
