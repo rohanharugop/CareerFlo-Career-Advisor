@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-// Update the import path below to the actual location of ThemeProvider, for example:
 import { ThemeProvider } from '../components/ThemeProvider';
-// Or create the file at 'components/ThemeProvider.tsx' if it does not exist.
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,6 +16,43 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Student Portal",
   description: "Learning portal for students",
+  icons: [
+    {
+      rel: "icon",
+      type: "image/png",
+      sizes: "32x32",
+      url: "/layout/favicon/favicon-16x16.png",
+    },
+    {
+      rel: "icon",
+      type: "image/png",
+      sizes: "16x16",
+      url: "/layout/favicon/favicon-16x16.png",
+    },
+    {
+      rel: "icon",
+      type: "image/x-icon",
+      url: "/layout/favicon/favicon.ico",
+    },
+    {
+      rel: "apple-touch-icon",
+      sizes: "180x180",
+      url: "/layout/favicon/apple-touch-icon.png",
+    },
+    {
+      rel: "icon",
+      type: "image/png",
+      sizes: "192x192",
+      url: "/layout/favicon/android-chrome-192x192.png",
+    },
+    {
+      rel: "icon",
+      type: "image/png",
+      sizes: "512x512",
+      url: "/layout/favicon/android-chrome-512x512.png",
+    },
+  ],
+  manifest: "/layout/favicon/site.webmanifest",
 };
 
 export default function RootLayout({

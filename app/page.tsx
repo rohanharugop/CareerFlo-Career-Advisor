@@ -36,7 +36,7 @@ export default async function Home() {
                   </p>
                 </div>
                 <div className="mx-auto w-full max-w-lg animate-in slide-in-from-right duration-800 delay-200">
-                  <div className="bg-gradient-to-br from-purple-900/70 via-purple-300/30 to-purple-700/20 backdrop-blur-md rounded-xl p-10 shadow-2xl transition-all duration-300 hover:shadow-purple-800/40 hover:scale-105 hover:bg-gradient-to-br hover:from-purple-800/50 hover:via-purple-700/60 hover:to-purple-900/50">
+                  <div className="bg-gradient-to-br from-green-400/70 via-blue-400/30 to-green-400/70 backdrop-blur-md rounded-xl p-10 shadow-2xl transition-all duration-300 hover:shadow-green-700/40 hover:scale-105 hover:bg-gradient-to-br hover:from-green-300/70 hover:via-blue-400/80 hover:to-green-700/80">
                     <AuthForm />
                   </div>
                 </div>

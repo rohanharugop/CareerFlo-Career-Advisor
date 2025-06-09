@@ -49,7 +49,13 @@ export default function Roadmap() {
 
   const handleNodeClick = (nodeNumber: number, href: string) => {
     setLastClickedNode(nodeNumber);
-    router.push(href);
+    
+    // Check if it's an external URL
+    if (href.startsWith('http://') || href.startsWith('https://')) {
+      window.open(href, '_blank');
+    } else {
+      router.push(href);
+    }
   };
 
   if (loading) {
@@ -184,7 +190,7 @@ export default function Roadmap() {
                 title="Build My Portfolio"
                 description="Create a portfolio to showcase your skills"
                 active={lastClickedNode === 3}
-                href="/roadmap/career"
+                href="https://ai-resume-maker-vocq.onrender.com/"
                 onClick={handleNodeClick}
               />
             </div>

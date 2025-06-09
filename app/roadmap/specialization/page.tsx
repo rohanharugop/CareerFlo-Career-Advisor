@@ -338,7 +338,7 @@ export default function CourseRecommendationPage() {
                     className="inline-flex items-center justify-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200 text-sm"
                   >
                     <svg className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
                     </svg>
                     Access Course
                   </a>
@@ -352,218 +352,206 @@ export default function CourseRecommendationPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <header className="px-4 lg:px-6 h-14 flex items-center">
-        <div className="flex w-full justify-between">
-          <a className="flex items-center justify-center" href="#">
-            <span className="font-bold text-xl">Course Recommendation Portal</span>
-          </a>
-          <div className="flex gap-2">
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={checkHealth}
-              className="text-xs"
-            >
-              Check Connection
-            </Button>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={handleRetrieveCourses}
-              disabled={retrieving}
-              className="text-xs bg-blue-600 hover:bg-blue-700 text-white border-blue-600"
-            >
-              {retrieving ? (
-                <>
-                  <svg className="animate-spin h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="m4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  Loading...
-                </>
-              ) : (
-                <>
-                  <svg className="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
-                  My Courses
-                </>
-              )}
-            </Button>
-          </div>
+  <div className="flex min-h-screen flex-col relative">
+    {/* Foundation Redirect Button */}
+    <a
+      href="/roadmap/foundation"
+      className="fixed left-4 top-1/2 -translate-y-1/2 z-50 flex items-center px-4 py-2 bg-purple-700 hover:bg-purple-800 text-white font-semibold rounded-lg shadow-lg transition-colors duration-200"
+      style={{ writingMode: 'vertical-lr', textOrientation: 'mixed' }}
+    >
+      Foundation
+    </a>
+    {/* Resume Maker Redirect Button */}
+    <a
+      href="https://ai-resume-maker-vocq.onrender.com/"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="fixed right-4 top-1/2 -translate-y-1/2 z-50 flex items-center px-4 py-2 bg-blue-700 hover:bg-blue-800 text-white font-semibold rounded-lg shadow-lg transition-colors duration-200"
+      style={{ writingMode: 'vertical-lr', textOrientation: 'mixed' }}
+    >
+      Resume&nbsp;Maker
+    </a>
+    <header className="px-4 lg:px-6 h-14 flex items-center">
+      <div className="flex w-full justify-between">
+        <a className="flex items-center justify-center" href="#">
+          <span className="font-bold text-xl">Course Recommendation Portal</span>
+        </a>
+        <div className="flex gap-2">
+          
+          
         </div>
-      </header>
-      <main className="flex-1">
-        <section className="w-full py-12 md:py-24 lg:py-32">
-          <div className="container px-4 md:px-6">
-            <div className="grid gap-6 items-center">
-              <div className="space-y-4 max-w-3xl mx-auto text-center transform transition-all duration-700 ease-out">
-                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl animate-in slide-in-from-top-4 duration-700">
-                  Get personalized course recommendations
-                </h1>
-                <p className="text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed animate-in slide-in-from-top-6 duration-700 delay-200">
-                  Describe your interests, goals, or specific topics you'd like to explore. Our AI will recommend the perfect course for your learning journey.
-                  <br />
-                </p>
+      </div>
+    </header>
+    <main className="flex-1">
+      <section className="w-full py-12 md:py-24 lg:py-32">
+        <div className="container px-4 md:px-6">
+          <div className="grid gap-6 items-center">
+            <div className="space-y-4 max-w-3xl mx-auto text-center transform transition-all duration-700 ease-out">
+              <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl animate-in slide-in-from-top-4 duration-700">
+                Get personalized course recommendations
+              </h1>
+              <p className="text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed animate-in slide-in-from-top-6 duration-700 delay-200">
+                Describe your interests, goals, or specific topics you'd like to explore. Our AI will recommend the perfect course for your learning journey.
+                <br />
+              </p>
+            </div>
+
+            {/* Retrieve Message */}
+            {retrieveMessage && (
+              <div className={`max-w-2xl mx-auto p-3 rounded-lg text-sm text-center ${
+                retrieveMessage.includes('Found') 
+                  ? 'bg-blue-900/50 border border-blue-700 text-blue-300' 
+                  : 'bg-yellow-900/50 border border-yellow-700 text-yellow-300'
+              }`}>
+                {retrieveMessage}
               </div>
+            )}
 
-              {/* Retrieve Message */}
-              {retrieveMessage && (
-                <div className={`max-w-2xl mx-auto p-3 rounded-lg text-sm text-center ${
-                  retrieveMessage.includes('Found') 
-                    ? 'bg-blue-900/50 border border-blue-700 text-blue-300' 
-                    : 'bg-yellow-900/50 border border-yellow-700 text-yellow-300'
-                }`}>
-                  {retrieveMessage}
+            {/* Show Saved Courses */}
+            {showSavedCourses && savedCourses.length > 0 && (
+              <div className="max-w-4xl mx-auto space-y-6">
+                <div className="text-center">
+                  <h2 className="text-2xl font-bold text-blue-300 mb-2">Your Saved Courses</h2>
+                  <p className="text-gray-400 text-sm">Courses you've saved for future reference</p>
                 </div>
-              )}
-
-              {/* Show Saved Courses */}
-              {showSavedCourses && savedCourses.length > 0 && (
-                <div className="max-w-4xl mx-auto space-y-6">
-                  <div className="text-center">
-                    <h2 className="text-2xl font-bold text-blue-300 mb-2">Your Saved Courses</h2>
-                    <p className="text-gray-400 text-sm">Courses you've saved for future reference</p>
-                  </div>
-                  {renderSavedCourses()}
-                  <div className="flex justify-center">
-                    <Button 
-                      onClick={() => setShowSavedCourses(false)}
-                      variant="outline"
-                      className="border-blue-600 text-blue-300 hover:bg-blue-600 hover:text-white"
-                    >
-                      Hide Saved Courses
-                    </Button>
-                  </div>
+                {renderSavedCourses()}
+                <div className="flex justify-center">
+                  <Button 
+                    onClick={() => setShowSavedCourses(false)}
+                    variant="outline"
+                    className="border-blue-600 text-blue-300 hover:bg-blue-600 hover:text-white"
+                  >
+                    Hide Saved Courses
+                  </Button>
                 </div>
-              )}
-              
-              {!submitted && !showSavedCourses ? (
-                <div className="mx-auto w-full max-w-2xl animate-in slide-in-from-bottom-4 duration-700 delay-300">
-                  <div className="space-y-6">
-                    <div className="space-y-2">
-                      <label htmlFor="prompt" className="text-lg font-medium text-center block">
-                        What would you like to learn?
-                      </label>
-                      <p className="text-sm text-gray-500 text-center">
-                        Describe your learning goals and interests in detail
-                      </p>
-                    </div>
-                    
-                    <div className="space-y-4">
-                      <textarea
-                        id="prompt"
-                        value={prompt}
-                        onChange={(e) => setPrompt(e.target.value)}
-                        onKeyPress={handleKeyPress}
-                        placeholder="e.g., 'I want to learn web development to build my own startup', 'Machine learning for data analysis', 'Digital marketing to grow my business', or 'Python programming for automation'"
-                        className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none h-32 text-base"
-                        rows={4}
-                        disabled={loading}
-                      />
-                    </div>
-                    
-                    <Button 
-                      onClick={handleSubmit} 
-                      className="w-full h-12 text-base" 
-                      disabled={loading || !prompt.trim()}
-                    >
-                      {loading ? 'Getting Recommendations...' : 'Get Course Recommendation'}
-                    </Button>
+              </div>
+            )}
+            
+            {!submitted && !showSavedCourses ? (
+              <div className="mx-auto w-full max-w-2xl animate-in slide-in-from-bottom-4 duration-700 delay-300">
+                <div className="space-y-6">
+                  <div className="space-y-2">
+                    <label htmlFor="prompt" className="text-lg font-medium text-center block">
+                      What would you like to learn?
+                    </label>
+                    <p className="text-sm text-gray-500 text-center">
+                      Describe your learning goals and interests in detail
+                    </p>
                   </div>
                   
-                  {error && (
-                    <div className="mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded animate-in slide-in-from-bottom-2 duration-300">
-                      <p className="font-medium">Error:</p>
-                      <p>{error}</p>
-                    </div>
-                  )}
+                  <div className="space-y-4">
+                    <textarea
+                      id="prompt"
+                      value={prompt}
+                      onChange={(e) => setPrompt(e.target.value)}
+                      onKeyPress={handleKeyPress}
+                      placeholder="e.g., 'I want to learn web development to build my own startup', 'Machine learning for data analysis', 'Digital marketing to grow my business', or 'Python programming for automation'"
+                      className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none h-32 text-base"
+                      rows={4}
+                      disabled={loading}
+                    />
+                  </div>
+                  
+                  <Button 
+                    onClick={handleSubmit} 
+                    className="w-full h-12 text-base" 
+                    disabled={loading || !prompt.trim()}
+                  >
+                    {loading ? 'Getting Recommendations...' : 'Get Course Recommendation'}
+                  </Button>
                 </div>
-              ) : submitted && !showSavedCourses ? (
-                <div className="space-y-6">
-                  <div className={`text-center transform transition-all duration-700 ease-out ${
+                
+                {error && (
+                  <div className="mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded animate-in slide-in-from-bottom-2 duration-300">
+                    <p className="font-medium">Error:</p>
+                    <p>{error}</p>
+                  </div>
+                )}
+              </div>
+            ) : submitted && !showSavedCourses ? (
+              <div className="space-y-6">
+                <div className={`text-center transform transition-all duration-700 ease-out ${
+                  showResults ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                }`}>
+                  <h2 className="text-2xl font-bold">Here is your personalized course recommendation</h2>
+                  <div className="mt-4">
+                    <p className="text-gray-500 mb-2">Based on your request:</p>
+                    <div className="text-sm text-white max-w-2xl mx-auto bg-gray-800 p-3 rounded-lg">
+                      <span className="font-medium text-purple-300">Your Query:</span>
+                      <span className="ml-2 text-gray-200">{prompt}</span>
+                    </div>
+                  </div>
+                </div>
+                
+                {error && (
+                  <div className={`max-w-2xl mx-auto mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded transform transition-all duration-500 ease-out delay-200 ${
                     showResults ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
                   }`}>
-                    <h2 className="text-2xl font-bold">Here is your personalized course recommendation</h2>
-                    <div className="mt-4">
-                      <p className="text-gray-500 mb-2">Based on your request:</p>
-                      <div className="text-sm text-white max-w-2xl mx-auto bg-gray-800 p-3 rounded-lg">
-                        <span className="font-medium text-purple-300">Your Query:</span>
-                        <span className="ml-2 text-gray-200">{prompt}</span>
-                      </div>
-                    </div>
+                    <p className="font-medium">Error:</p>
+                    <p>{error}</p>
                   </div>
-                  
-                  {error && (
-                    <div className={`max-w-2xl mx-auto mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded transform transition-all duration-500 ease-out delay-200 ${
-                      showResults ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-                    }`}>
-                      <p className="font-medium">Error:</p>
-                      <p>{error}</p>
+                )}
+                
+                <div className="flex flex-col space-y-6 max-w-4xl mx-auto">
+                  {recommendation ? (
+                    <div className="relative group">
+                      <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 via-purple-800 to-purple-600 rounded-lg blur-lg opacity-30 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+                      <Card 
+                        className={`relative bg-black border-0 shadow-lg hover:shadow-xl transition-all duration-500 transform ${
+                          showResults 
+                            ? 'translate-x-0 opacity-100' 
+                            : '-translate-x-full opacity-0'
+                        }`}
+                        style={{
+                          transitionDelay: '300ms'
+                        }}
+                      >
+                        <CardHeader className="bg-black">
+                          <CardTitle className="text-white text-xl font-bold flex items-center">
+                            <svg className="h-6 w-6 text-purple-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                            </svg>
+                            Course Recommendation
+                          </CardTitle>
+                          <CardDescription className="text-purple-300 text-base">
+                            Tailored recommendation based on your interests and goals
+                          </CardDescription>
+                        </CardHeader>
+                        <CardContent className="bg-black p-6">
+                          {renderRecommendation(recommendation)}
+                        </CardContent>
+                      </Card>
+                    </div>
+                  ) : (
+                    <div className="relative group">
+                      <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 via-purple-800 to-purple-600 rounded-lg blur-lg opacity-30 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+                      <Card className={`relative bg-black border-0 shadow-lg transform transition-all duration-500 ease-out ${
+                        showResults ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'
+                      }`}>
+                        <CardContent className="text-center py-8 bg-black">
+                          <p className="text-purple-200">No recommendation found. Please try with a different query.</p>
+                        </CardContent>
+                      </Card>
                     </div>
                   )}
-                  
-                  <div className="flex flex-col space-y-6 max-w-4xl mx-auto">
-                    {recommendation ? (
-                      <div className="relative group">
-                        <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 via-purple-800 to-purple-600 rounded-lg blur-lg opacity-30 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-                        <Card 
-                          className={`relative bg-black border-0 shadow-lg hover:shadow-xl transition-all duration-500 transform ${
-                            showResults 
-                              ? 'translate-x-0 opacity-100' 
-                              : '-translate-x-full opacity-0'
-                          }`}
-                          style={{
-                            transitionDelay: '300ms'
-                          }}
-                        >
-                          <CardHeader className="bg-black">
-                            <CardTitle className="text-white text-xl font-bold flex items-center">
-                              <svg className="h-6 w-6 text-purple-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                              </svg>
-                              Course Recommendation
-                            </CardTitle>
-                            <CardDescription className="text-purple-300 text-base">
-                              Tailored recommendation based on your interests and goals
-                            </CardDescription>
-                          </CardHeader>
-                          <CardContent className="bg-black p-6">
-                            {renderRecommendation(recommendation)}
-                          </CardContent>
-                        </Card>
-                      </div>
-                    ) : (
-                      <div className="relative group">
-                        <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 via-purple-800 to-purple-600 rounded-lg blur-lg opacity-30 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-                        <Card className={`relative bg-black border-0 shadow-lg transform transition-all duration-500 ease-out ${
-                          showResults ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'
-                        }`}>
-                          <CardContent className="text-center py-8 bg-black">
-                            <p className="text-purple-200">No recommendation found. Please try with a different query.</p>
-                          </CardContent>
-                        </Card>
-                      </div>
-                    )}
-                  </div>
-                  
-                  <div className={`flex justify-center mt-8 transform transition-all duration-700 ease-out ${
-                    showResults ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-                  }`} style={{ transitionDelay: '500ms' }}>
-                    <Button 
-                      onClick={resetForm}
-                      className="bg-purple-900 hover:bg-purple-500 transition-colors duration-300"
-                    >
-                      Search Again
-                    </Button>
-                  </div>
                 </div>
-              ) : null}
-            </div>
+                
+                <div className={`flex justify-center mt-8 transform transition-all duration-700 ease-out ${
+                  showResults ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                }`} style={{ transitionDelay: '500ms' }}>
+                  <Button 
+                    onClick={resetForm}
+                    className="bg-purple-900 hover:bg-purple-500 transition-colors duration-300"
+                  >
+                    Search Again
+                  </Button>
+                </div>
+              </div>
+            ) : null}
           </div>
-        </section>
-      </main>
-    </div>
+        </div>
+      </section>
+    </main>
+  </div>
   );
 }

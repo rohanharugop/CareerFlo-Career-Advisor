@@ -8,8 +8,6 @@ Course Level **UG Degree**
 
 Mode of Course **Full Time**
 
-Total Tuition Fees INR **18.00 Lakh**
-
 Type of Univers ity **Private,Autonomous**
 
 ##BMS College Scholarships Scholarship 1 The institute pro vides vario us go
@@ -69,6 +67,14 @@ India NOKIA Oracle PayTM Philips India
    Science or Electronics as one of the optional subjects. Candidates belonging
    to OBC, SC and ST must be domicile of Karnataka state.
 
+### FEES
+
+QUOTA | Fees
+
+1. CET | 1,30,395
+2. COMEDK | 3,00,000
+3. Management | 8,00,000
+
 ##BMS KCET CUTOFF - GENERAL
 
 | Course                                              | 2022  | 2023  | 2024  |
@@ -115,23 +121,24 @@ India NOKIA Oracle PayTM Philips India
 | B.E in Artificial Intelligence and Machine Learning | 12580  | 32443  | 31284  |
 
 ##BMS KCET CUTOFF - OBC
-
-| Course                                              | 2022   | 2023   | 2024   |
+| Course | 2022 | 2023 | 2024 |
 | --------------------------------------------------- | ------ | ------ | ------ |
-| B.E. in Electrical and Electronics Engineering      | 24436  | 51371  | 75397  |
-| B.E. in Computer Science and Engineering            | 3898   | 14210  | 23627  |
-| B.E. in Mechanical Engineering                      | 83659  | 131233 | 143009 |
-| B.E. in Chemical Engineering                        | – / –  | 130077 | 84349  |
-| B.E. in Civil Engineering                           | 77846  | 79398  | 94563  |
-| B.E. in Biotechnology                               | – / –  | 56024  | 54406  |
-| B.E. in Industrial Engineering and Management       | 112876 | 180250 | 173421 |
-| B.E. in Electronics and Communication Engineering   | 20379  | 30602  | 44826  |
-| B.E. in Aerospace Engineering                       | 28345  | 62903  | 27053  |
-| B.E in Artificial Intelligence and Machine Learning | 12580  | 32443  | 31284  |
+| B.E. in Electrical and Electronics Engineering | 24436 | 51371 | 75397 |
+| B.E. in Computer Science and Engineering | 3898 | 14210 | 23627 |
+| B.E. in Mechanical Engineering | 83659 | 131233 | 143009 |
+| B.E. in Chemical Engineering | – / – | 130077 | 84349 |
+| B.E. in Civil Engineering | 77846 | 79398 | 94563 |
+| B.E. in Biotechnology | – / – | 56024 | 54406 |
+| B.E. in Industrial Engineering and Management | 112876 | 180250 | 173421 |
+| B.E. in Electronics and Communication Engineering | 20379 | 30602 | 44826 |
+| B.E. in Aerospace Engineering | 28345 | 62903 | 27053 |
+| B.E in Artificial Intelligence and Machine Learning | 12580 | 32443 | 31284 |
 
 ---
 
-#College 2: PES University
+---
+
+# College 2: PES University
 
 ## PES University Overview
 
@@ -140,10 +147,6 @@ Duration **4 years**
 Course Level **UG Degree**
 
 Mode of Course **Full Time**
-
-Total Tuition Fees INR **15.20 Lakh**
-
-Average package INR **12.00 Lakh**
 
 Seat breakup **540**
 
@@ -165,14 +168,6 @@ inclusive of various components, such as examination, medical, seat rent, etc.
 The tuition fee may subject to vary depending on the category a student belongs
 to. Refer to the table below for a detailed break-up of PES University B.Tech.
 in Electronics and Communication Engineering fees:
-
-##### Fee components Amount (4 years)
-
-Tuition Fees INR 15.20 Lakh Hostel Fees INR 2.31 Lakh One-time Payment INR 10,
-Total fee: INR 17.61 Lakh
-
-These are based on information available on various sources. Latest values may
-differ.
 
 ## Scholarships
 
@@ -307,6 +302,13 @@ universities listed in the notification at
     (m) and (n) to claim Government Seats and Government quota seats as per
     proviso of rule 9 (2) of CET-2006 Admission Rules.
 
+## Fees PES
+
+QUOTA | Fees
+
+1. No Scholarship | 5,00,000
+2. Scholarship | 4,00,000
+
 ## PES College KCET Cutoffs
 
 ### PES COLLEGE KCET CUTOFF - GENERAL:
@@ -316,7 +318,7 @@ universities listed in the notification at
 | B.Tech. in Mechanical Engineering                       | 9055  | 26736 | 19130  |
 | B.Tech. in Electronics and Communication Engineering    | 16146 | 3803  | 8391   |
 | B.Tech. in Electrical and Electronics Engineering       | 1698  | 6836  | 6613   |
-| B.Tech. in Computer Science and Engineering             | 94746 | 1124  | 5241   |
+| B.Tech. in Computer Science and Engineering             | 947   | 1124  | 5241   |
 | B.Tech. in Biotechnology                                | 9600  | 14206 | 13805  |
 | Bachelor of Architecture (B.Arch.)                      | – / – | – / – | 195    |
 | Bachelor of Pharmacy (B.Pharm.)                         | 32051 | – / – | 41351  |
@@ -377,24 +379,10 @@ universities listed in the notification at
     Duration **4 years**
     Course Level **UG Degree**
     Mode of Course **Full Time**
-
-    ###### Total Tuition Fees INR 10 .46 Lakh
-
     ###### Average package INR 7 .66 Lakh
 
     Seat breakup **198**
     Type of University **Private ,Autonomous**
-
-## Fees
-
-    ##### Fee components Amount (4 years)
-
-    ###### Tuition Fees INR 10.46 Lakh
-
-    ## Total fee INR 10.46 Lakh
-
-_\*These are based on information available on various sources. Latest values
-may differ._
 
 ## MSRIT College Rankings
 
@@ -405,18 +393,6 @@ may differ._
     Rank 5 India To day 2024
     Rank 6 Outlook 2024
     Rank 75 NIRF 2024
-
-## MSRIT College Scholarships
-
-    ###### Institute offers various scholarships.
-
-    ###### 1. Post Metric Scholarship to SC/STs
-
-    ###### 2. Fee-reimbursements to SC/STsc) Fee- concession to Category-l, II, and III
-
-    ###### 3. Extra boarding and lodging allowance to Category-I, II, & IIIe) Defense Scholarship
-
-    ###### 4.  MSRIT Alumni Scholarship
 
 ## MSRIT College Placements Details
 
@@ -495,6 +471,15 @@ may differ._
     subjects individually with English as a compulsory subject from recognized byState/Central Government. Physics and Mathematics are compulsory subjects
     along with Chemistry or Bio Technology or Biology or Computer Science or
     Electronics as one of the optional subjects. Candidates belonging to OBC, SCand ST must be domicile of Karnataka state.
+
+## Fees MSRIT
+
+Fees Structure MSRIT:
+QUOTA | Fees
+
+1. CET | 1,27,245
+2. COMEDK And Management | 3,12,587
+3. PMSSS, J&K | 1,28,745
 
 ## MSRIT College Cutoff Details
 
