@@ -16,13 +16,18 @@ interface UpdateProfileData {
   stream?: string
 }
 
+// Define the context type for App Router
+interface RouteContext {
+  params: Promise<{ id: string }>
+}
+
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: RouteContext
 ) {
   try {
-    // Get the profile ID from the URL params
-    const profileId = params.id
+    // Await the params since they're now a Promise in App Router
+    const { id: profileId } = await context.params
 
     // Validate UUID format
     const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
@@ -113,8 +118,8 @@ export async function PUT(
 // Optional: Add PATCH method as an alternative to PUT
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: RouteContext
 ) {
   // PATCH can use the same logic as PUT for partial updates
-  return PUT(request, { params })
+  return PUT(request, context)
 }
