@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Home, User, BookOpen, Edit, LogOut, GraduationCap } from "lucide-react"
+import { Home, User, BookOpen, LogOut, GraduationCap } from "lucide-react"
 import ThemeToggle from "@/components/ThemeToggle"
 import SavedCollegesSection from "@/components/SavedCollegesSection"
 import EditProfileModal from "@/components/EditProfileModal"
@@ -202,7 +202,7 @@ export default function DashboardClient({
                   Your Courses
                 </CardTitle>
                 <CardDescription>
-                  Courses you've saved or enrolled in
+                  Courses you have saved or enrolled in
                 </CardDescription>
               </CardHeader>
               <CardContent>

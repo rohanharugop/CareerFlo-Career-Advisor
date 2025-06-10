@@ -9,11 +9,11 @@ interface FlaskResponse {
   };
 }
 
-interface CourseRecommendation {
-  CourseName: string;
-  CourseDescrption: string;
-  CourseLink: string;
-}
+// interface CourseRecommendation {
+//   CourseName: string;
+//   CourseDescrption: string;
+//   CourseLink: string;
+// }
 
 export async function POST(request: NextRequest) {
   try {

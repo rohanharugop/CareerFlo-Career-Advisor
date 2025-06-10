@@ -70,7 +70,7 @@ export function QuestionnaireForm() {
   return (
     <Card className="w-full max-w-lg">
       <CardHeader>
-        <CardTitle>Let's get to know you!</CardTitle>
+        <CardTitle>Let&apos;s get to know you!</CardTitle>
         <CardDescription>
           Step {step} of {formData.education_status === "12th pass" ? 3 : 2}
         </CardDescription>
