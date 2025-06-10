@@ -119,7 +119,6 @@ python-iso639==2025.2.18
 python-magic==0.4.27
 python-oxmsg==0.0.2
 pytz==2025.2
-pywin32==308
 PyYAML==6.0.2
 RapidFuzz==3.13.0
 referencing==0.36.2
