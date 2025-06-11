@@ -338,7 +338,7 @@ export default function Foundation() {
                           </label>
                           <Input
                             id="interest"
-                            placeholder="e.g., Computer Science, Mechanical Engineering, Medicine"
+                            placeholder="e.g., Mathematics, Computer Science, AI"
                             value={formData.interest}
                             onChange={(e) => handleInputChange("interest", e.target.value)}
                             disabled={loading}
@@ -353,7 +353,7 @@ export default function Foundation() {
                           </label>
                           <Input
                             id="kcetRank"
-                            placeholder="e.g., 5000, 15000"
+                            placeholder="e.g., 1000, 5000, 15000"
                             value={formData.kcetRank}
                             onChange={(e) => handleInputChange("kcetRank", e.target.value)}
                             disabled={loading}
@@ -399,22 +399,22 @@ export default function Foundation() {
                       </div>
 
                       <Button
-                        onClick={handleSubmit}
-                        className="w-full h-14 text-lg bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold transition-all duration-300 disabled:opacity-50 rounded-xl shadow-lg hover:shadow-purple-500/25 hover:scale-[1.02]"
-                        disabled={loading || !isFormValid()}
-                      >
-                        {loading ? (
-                          <>
-                            <RefreshCw className="w-5 h-5 mr-3 animate-spin" />
-                            Analyzing Your Preferences...
-                          </>
-                        ) : (
-                          <>
-                            <Search className="w-5 h-5 mr-3" />
-                            Find My Perfect Colleges
-                          </>
-                        )}
-                      </Button>
+                          onClick={handleSubmit}
+                          className="w-full h-14 text-lg bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold transition-all duration-300 disabled:opacity-50 rounded-xl shadow-lg hover:shadow-purple-500/25 hover:scale-[1.02]"
+                          disabled={loading || !isFormValid()}
+                        >
+                          {loading ? (
+                            <>
+                              <RefreshCw className="w-5 h-5 mr-3 animate-spin" />
+                              Analyzing Your Preferences...
+                            </>
+                          ) : (
+                            <>
+                              <Sparkles className="w-5 h-5 mr-3" />
+                              Get AI College Suggestions
+                            </>
+                          )}
+                        </Button>
                     </CardContent>
                   </Card>
 

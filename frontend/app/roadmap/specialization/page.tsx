@@ -554,7 +554,7 @@ export default function CourseRecommendationPage() {
                               value={prompt}
                               onChange={(e) => setPrompt(e.target.value)}
                               onKeyPress={handleKeyPress}
-                              placeholder="e.g., 'I want to learn web development to build my own startup', 'Machine learning for data analysis', 'Digital marketing to grow my business', or 'Python programming for automation'"
+                              placeholder="e.g., 'Web Dev for beginners', 'Machine learning for data analysis', 'Digital marketing for business', or 'Python programming for automation'"
                               className="w-full p-6 bg-slate-800/50 border border-slate-600/50 rounded-xl focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 text-white placeholder-gray-400 resize-none h-32 text-base leading-relaxed transition-all duration-300"
                               rows={4}
                               disabled={loading}

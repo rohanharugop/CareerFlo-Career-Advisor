@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Call Flask API
-    const flaskResponse = await fetch('http://localhost:5000/recommend-course', {
+    const flaskResponse = await fetch('https://miniproject-byna.onrender.com/recommend-course', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
