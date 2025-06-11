@@ -1,82 +1,77 @@
-import json
 import os
+import json
 from dotenv import load_dotenv
-load_dotenv()
-
-from langchain_community.document_loaders import UnstructuredMarkdownLoader
-from langchain_core.documents import Document
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
 from langchain_community.chat_models import ChatOpenAI
-from langchain.prompts import PromptTemplate
 from langchain.chains import RetrievalQA
-from langchain.chains.combine_documents.stuff import StuffDocumentsChain
-from langchain.chains.llm import LLMChain
+from langchain.prompts import PromptTemplate
 
-# Load embedding model
+load_dotenv()
+
+# Set up embeddings and vector store
 embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
-persist_directory = './chroma_courses_db'
-
-# Vector DB setup
-vectorstore = Chroma(
-    persist_directory=persist_directory,
-    embedding_function=embeddings
-)
+vectorstore = Chroma(persist_directory="./chroma_courses_db", embedding_function=embeddings)
 retriever = vectorstore.as_retriever()
 
-# Strict prompt template: only return JSON response
-prompt_template_str = """You are an AI assistant that extracts online course information.
-
-Using the given context, return the response **only** in this exact JSON format and nothing else:
-
-{{
-  "CourseName" : String,
-  "CourseDescrption" : String,
-  "CourseLink" : String
-}}
-
-- Description must be only one sentence.
-- Do not add any explanation, notes, or comments—just output the JSON object.
-
-Context:
-{context}
-
-Question:
-{question}
-"""
-
-prompt = PromptTemplate(
-    input_variables=["context", "question"],
-    template=prompt_template_str
-)
-
-# Set up LLM
-api_key = os.environ.get('Groq_APIKey')
+# Load LLM
+api_key = os.getenv("Groq_APIKey")
 llm = ChatOpenAI(
     model="llama3-70b-8192",
     openai_api_key=api_key,
     openai_api_base="https://api.groq.com/openai/v1"
 )
 
-# Chain setup
-llm_chain = LLMChain(llm=llm, prompt=prompt)
-stuff_chain = StuffDocumentsChain(
-    llm_chain=llm_chain,
-    document_variable_name="context"
-)
+# Prompt builder with format lock and example
+def build_prompt(context, question):
+    return f"""
+You are an expert assistant extracting course information from educational content.
 
-rag_chain = RetrievalQA(
-    retriever=retriever,
-    combine_documents_chain=stuff_chain,
-    return_source_documents=False
-)
+⚠️ STRICT INSTRUCTION: Respond ONLY in a valid JSON object using the exact field names and format below. Do not include any explanation, markdown, or commentary.
 
-# Function for querying
+Format:
+{{
+  "CourseName": "string",
+  "CourseDescription": "string",
+  "CourseLink": "string"
+}}
+
+Example:
+{{
+  "CourseName": "Machine Learning with Python",
+  "CourseDescription": "A beginner-friendly course covering ML concepts using Python.",
+  "CourseLink": "https://example.com/ml-course"
+}}
+
+Context:
+{context}
+
+Question:
+{question}
+
+Output a single JSON object exactly in the format shown.
+"""
+
+# Trim long documents to reduce context overload
+def trim_docs(docs, max_chars=4000):
+    return "\n".join(doc.page_content for doc in docs)[:max_chars]
+
+# Main call function
 def call_rag(question):
-    response = rag_chain.invoke({"query": question})
-    try:
-        result = json.loads(response["result"].strip())
-    except:
-        result = {}
-    print("\nResponse from RAG/LLM:\n", result)
-    return {"result": result}
+    docs = retriever.get_relevant_documents(question)
+    context = trim_docs(docs)
+
+    prompt = build_prompt(context, question)
+
+    for attempt in range(2):  # Retry once if necessary
+        try:
+            response = llm.invoke(prompt).content
+            result = json.loads(response.strip())
+
+            if isinstance(result, dict) and all(k in result for k in ["CourseName", "CourseDescription", "CourseLink"]):
+                print("\nResponse from RAG/LLM:\n", result)
+                return {"result": result}
+        except Exception as e:
+            print(f"[Attempt {attempt+1}] Error parsing response:", e)
+
+    return {"result": {}}

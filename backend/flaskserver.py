@@ -1,26 +1,20 @@
 from flask import Flask, request, jsonify
 import os
-
 import rag
 import course_rag
-# from course_recommendation import GroqLlama3Client
 
 app = Flask(__name__)
-
-# In-memory storage
 saved_colleges = []
 
 @app.route('/college-info', methods=['POST'])
 def college_info():
     data = request.get_json()
-    resp = rag.call_rag(data['prompt'])
-    return jsonify(resp)
+    return jsonify(rag.call_rag(data['prompt']))
 
 @app.route('/save-college', methods=['POST'])
 def save_college():
-    college_data = request.get_json()
     try:
-        saved_colleges.append(college_data)
+        saved_colleges.append(request.get_json())
         return jsonify({"status": "success"})
     except Exception:
         return jsonify({"status": "failure"}), 500
@@ -28,8 +22,7 @@ def save_college():
 @app.route('/recommend-course', methods=['POST'])
 def recommend_course():
     data = request.get_json()
-    response = course_rag.call_rag(data['prompt'])
-    return jsonify({"result": response['result']})
+    return jsonify(course_rag.call_rag(data['prompt']))
 
 @app.route('/', methods=['GET'])
 def root():
