@@ -295,12 +295,13 @@ export default function Roadmap() {
                     <div className="p-2 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg group-hover:scale-110 transition-transform">
                       <GraduationCap size={20} className="text-white" />
                     </div>
-                    <h3 className="font-semibold text-gray-900 dark:text-white">College Recommendations</h3>
+                    <h3 className="font-semibold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">College Suggestions</h3>
                   </div>
-                  <p className="text-sm text-gray-600 dark:text-slate-400 leading-relaxed">Find the ideal college for you with our RAG recommendation system powered by AI analysis.</p>
-                  <div className="flex items-center gap-2 mt-3 text-emerald-600 dark:text-emerald-400 text-sm">
-                    <ArrowRight size={14} />
-                    <span>Get personalized matches</span>
+                    <p className="text-sm bg-gradient-to-r from-yellow-500 via-green-400 to-green-600 dark:from-slate-300 dark:to-slate-500 bg-clip-text text-transparent leading-relaxed">
+                      Find the ideal college for you with our RAG recommendation system powered by AI analysis.
+                    </p>                   
+                    <div className="flex items-center gap-2 mt-3 text-emerald-600 dark:text-emerald-400 text-sm">
+                    
                   </div>
                 </div>
 
@@ -309,12 +310,13 @@ export default function Roadmap() {
                     <div className="p-2 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg group-hover:scale-110 transition-transform">
                       <BookOpen size={20} className="text-white" />
                     </div>
-                    <h3 className="font-semibold text-gray-900 dark:text-white">Course Suggestions</h3>
+                    <h3 className="font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Course Suggestions</h3>
                   </div>
-                  <p className="text-sm text-gray-600 dark:text-slate-400 leading-relaxed">Get started with building real-life skills through curated introductory courses.</p>
-                  <div className="flex items-center gap-2 mt-3 text-blue-600 dark:text-blue-400 text-sm">
-                    <ArrowRight size={14} />
-                    <span>Start learning today</span>
+                    <p className="text-sm bg-gradient-to-r from-green-500 via-blue-400 to-green-600 dark:from-slate-300 dark:to-slate-500 bg-clip-text text-transparent leading-relaxed">
+                      Get started with building real-life skills through curated introductory courses                    
+                    </p>                  
+                    <div className="flex items-center gap-2 mt-3 text-blue-600 dark:text-blue-400 text-sm">
+                    
                   </div>
                 </div>
 
@@ -323,12 +325,13 @@ export default function Roadmap() {
                     <div className="p-2 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg group-hover:scale-110 transition-transform">
                       <FileText size={20} className="text-white" />
                     </div>
-                    <h3 className="font-semibold text-gray-900 dark:text-white">Resume Builder</h3>
+                    <h3 className="font-semibold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Resume Builder</h3>
                   </div>
-                  <p className="text-sm text-gray-600 dark:text-slate-400 leading-relaxed">Create a professional resume tailored to match your needs and highlight your skills.</p>
+                  <p className="text-sm bg-gradient-to-r from-red-500 via-purple-400 to-red-600 dark:from-slate-300 dark:to-slate-500 bg-clip-text text-transparent leading-relaxed">
+                    Create a professional resume tailored to match your needs and highlight your skills.
+                  </p>
                   <div className="flex items-center gap-2 mt-3 text-purple-600 dark:text-purple-400 text-sm">
-                    <ArrowRight size={14} />
-                    <span>Build your profile</span>
+                   
                   </div>
                 </div>
               </div>

@@ -1,33 +1,49 @@
-import glob
+import os
+import torch
 from langchain_community.document_loaders import UnstructuredMarkdownLoader
 from langchain_core.documents import Document
-
-
-persist_directory = r'./chroma_db'
-# Path to all .md files in the folder
-markdown_path = "CollegeInfo/allinfo.md"
-loader = UnstructuredMarkdownLoader(markdown_path)
-
-data = loader.load()
-assert len(data) == 1
-assert isinstance(data[0], Document)
-readme_content = data[0].page_content
-print(readme_content[:250])
-
-
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_community.vectorstores import Chroma  # Corrected import
 
-text_splitter = RecursiveCharacterTextSplitter(chunk_size = 1500, chunk_overlap = 400)
-splits = text_splitter.split_documents(data)
+# === Paths ===
+markdown_path = "CollegeInfo/allinfo.md"
+persist_directory = "./chroma_db_bge"
 
-from langchain.embeddings import HuggingFaceEmbeddings
-from langchain.vectorstores import Chroma
+# === Load and validate document ===
+loader = UnstructuredMarkdownLoader(markdown_path)
+documents = loader.load()
+assert len(documents) == 1 and isinstance(documents[0], Document)
+print(documents[0].page_content[:250])  # preview
 
-# Load a local embedding model from Hugging Face
-embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+# === Preprocess & Split ===
+text_splitter = RecursiveCharacterTextSplitter(
+    chunk_size=1000,
+    chunk_overlap=200,
+    separators=["\n##", "\n\n", "\n", ".", " "]  # Preserve headings like ## BMS KCET CUTOFF - SC
+)
+splits = text_splitter.split_documents(documents)
 
-# Create your vectorstore
-vectorstore = Chroma.from_documents(documents=splits, embedding=embeddings, persist_directory=persist_directory)
+# === Add Category Metadata ===
+for doc in splits:
+    if "CUTOFF - SC" in doc.page_content:
+        doc.metadata["category"] = "SC"
+    elif "CUTOFF - ST" in doc.page_content:
+        doc.metadata["category"] = "ST"
+    elif "CUTOFF - OBC" in doc.page_content:
+        doc.metadata["category"] = "OBC"
+    else:
+        doc.metadata["category"] = "General"
 
-# Persist the vectorstore to disk
-# vectorstore.persist()
+# === Embedding Model ===
+embeddings = HuggingFaceEmbeddings(
+    model_name="BAAI/bge-base-en-v1.5",
+    model_kwargs={"device": "cuda" if torch.cuda.is_available() else "cpu"},
+)
+
+# === Vectorstore Initialization ===
+vectorstore = Chroma.from_documents(
+    documents=splits,
+    embedding=embeddings,
+    persist_directory=persist_directory
+)

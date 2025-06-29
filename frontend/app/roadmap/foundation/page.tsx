@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
 import SavedCollegesSection from "@/components/SavedCollegesSection"
 import { createClient } from "@/lib/supabase/client"
 import {
@@ -52,7 +53,7 @@ export default function Foundation() {
     interest: "",
     kcetRank: "",
     description: "",
-    background: "",
+    background: "General",
   })
   const [colleges, setColleges] = useState<College[]>([])
   const [loading, setLoading] = useState(false)
@@ -221,7 +222,7 @@ export default function Foundation() {
       interest: "",
       kcetRank: "",
       description: "",
-      background: "",
+      background: "General",
     })
     setShowResults(false)
   }
@@ -387,14 +388,26 @@ export default function Foundation() {
                             <User className="w-4 h-4 mr-2 text-orange-400" />
                             Background/Category
                           </label>
-                          <Input
-                            id="background"
-                            placeholder="e.g., General, SC/ST, OBC, Rural, Urban"
+                          <Select
                             value={formData.background}
-                            onChange={(e) => handleInputChange("background", e.target.value)}
+                            onValueChange={(value) => handleInputChange("background", value)}
                             disabled={loading}
-                            className="h-12 bg-slate-900/50 border-slate-600 text-white placeholder-slate-500 focus:border-purple-400 focus:ring-purple-400/20 rounded-lg"
-                          />
+                          >
+                            <SelectTrigger className="h-12 bg-slate-900/50 border-slate-600 text-white focus:border-purple-400 focus:ring-purple-400/20 rounded-lg">
+                              <SelectValue placeholder="Select your category" />
+                            </SelectTrigger>
+                            <SelectContent className="bg-slate-800 border-slate-600">
+                              <SelectItem value="General" className="text-white hover:bg-slate-700">
+                                General
+                              </SelectItem>
+                              <SelectItem value="SC/ST" className="text-white hover:bg-slate-700">
+                                SC/ST
+                              </SelectItem>
+                              <SelectItem value="OBC" className="text-white hover:bg-slate-700">
+                                OBC
+                              </SelectItem>
+                            </SelectContent>
+                          </Select>
                         </div>
                       </div>
 

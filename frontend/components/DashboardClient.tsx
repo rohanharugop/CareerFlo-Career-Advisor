@@ -25,7 +25,8 @@ import {
   Users,
   BookMarked,
   UserCircle,
-  Sparkles
+  Sparkles,
+  Info
 } from "lucide-react"
 import ThemeToggle from "@/components/ThemeToggle"
 import SavedCollegesSection from "@/components/SavedCollegesSection"
@@ -128,6 +129,13 @@ export default function DashboardClient({
                 <a href="/profile" className="flex items-center gap-3">
                   <User size={18} />
                   <span>Profile</span>
+                </a>
+              </Button>
+              
+              <Button variant="ghost" className="w-full justify-start h-11 hover:bg-muted/80 transition-colors" asChild>
+                <a href="/about" className="flex items-center gap-3">
+                  <Info size={18} />
+                  <span>About Us</span>
                 </a>
               </Button>
               

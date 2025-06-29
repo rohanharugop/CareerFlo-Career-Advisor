@@ -1,17 +1,20 @@
 import os
 import json
+import torch
 from dotenv import load_dotenv
-from langchain_community.embeddings import HuggingFaceEmbeddings
-from langchain_community.vectorstores import Chroma
-from langchain.chat_models import ChatOpenAI
-from langchain.chains import RetrievalQA
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_community.vectorstores import Chroma  # Corrected import
+from langchain_openai import ChatOpenAI
 
 load_dotenv()
 
 # Set up embedding and vector store
-embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
-vectorstore = Chroma(persist_directory="./chroma_db", embedding_function=embedding_model)
-retriever = vectorstore.as_retriever()
+embedding_model = HuggingFaceEmbeddings(
+    model_name="BAAI/bge-base-en-v1.5",
+    model_kwargs={"device": "cuda" if torch.cuda.is_available() else "cpu"}
+)
+vectorstore = Chroma(persist_directory="./chroma_db_bge", embedding_function=embedding_model)
+retriever = vectorstore.as_retriever(search_kwargs={"filter": {"category": "General"}})
 
 # Load LLM
 api_key = os.getenv("Groq_APIKey")
@@ -27,6 +30,8 @@ def build_prompt(context, question):
 You are an assistant helping users extract structured college information.
 
 Respond ONLY in a list of **exactly 3 JSON objects** using the following format. No extra text or comments.
+
+All cutoffs should reflect the **General Category** unless the user specifies a category (e.g., SC/ST/OBC).
 
 Format:
 {{
@@ -53,7 +58,6 @@ Ensure:
 - Only 3 JSON objects
 - All strings in double quotes
 - No explanation, headers, markdown, or extra notes
-- The CompanyNames field must be of 3 items
 Context:
 {context}
 
@@ -81,11 +85,11 @@ def parse_json_array(raw_str):
                 fixed.append(json.loads(item))
             except:
                 continue
-        return fixed[:3]  # return only top 3 items
+        return fixed[:3]
 
 # Final RAG call function
 def call_rag(question):
-    docs = retriever.get_relevant_documents(question)
+    docs = retriever.invoke(question)
     context = trim_docs(docs)
     prompt = build_prompt(context, question)
 
@@ -97,7 +101,7 @@ def call_rag(question):
             return parsed
         except Exception as e:
             print(f"[Attempt {attempt+1}] Parsing failed: {e}")
-    
+
     return []
 
 # Local test
