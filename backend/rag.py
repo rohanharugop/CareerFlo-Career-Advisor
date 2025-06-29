@@ -2,7 +2,7 @@ import os
 import json
 import torch
 from dotenv import load_dotenv
-from langchain.embeddings import HuggingFaceEmbeddings
+from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma  # Corrected import
 from langchain_openai import ChatOpenAI
 
