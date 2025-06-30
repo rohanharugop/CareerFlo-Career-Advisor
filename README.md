@@ -15,7 +15,6 @@
 - [Usage](#usage)
 - [API Documentation](#api-documentation)
 - [Screenshots](#screenshots)
-- [Contributing](#contributing)
 - [Acknowledgments](#acknowledgments)
 
 ## 🎯 Overview
@@ -276,11 +275,6 @@ Content-Type: application/json
 ![image](https://github.com/user-attachments/assets/49d8fd76-d4ec-43ba-b778-00ce690d655d)
 ![image](https://github.com/user-attachments/assets/7e200dee-d4fc-4720-b3ef-0c02d8c4772a)
 
-
-
-## 🤝 Contributing
-
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
 
 ### Development Workflow
 1. Fork the repository
